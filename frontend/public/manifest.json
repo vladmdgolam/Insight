@@ -1,0 +1,45 @@
+{
+  "name": "Insight",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "homepage_url": "http://vladmdgolam.github.io",
+  "description": "",
+  "browser_action": {
+    "default_title": "Insight",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": [
+      "background.bundle.js",
+      "backend/common.js",
+      "backend/storage.js",
+      "backend/activity.js",
+      "backend/tab.js",
+      "backend/timeInterval.js",
+      "backend/background.js",
+      "backend/restriction.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.bundle.js"]
+    }
+  ],
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "idle",
+    "chrome://favicon/*",
+    "webNavigation",
+    "unlimitedStorage"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
