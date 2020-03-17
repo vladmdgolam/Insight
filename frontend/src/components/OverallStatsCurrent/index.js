@@ -11,10 +11,12 @@ function OverallStatsCurrent(props) {
       const thisWebsiteWholeData = tabs.filter(
         tab => tab.url === currentWebsite
       )[0]
-      // первое посещение ещё можно достать
-      setWholeData(thisWebsiteWholeData)
+      // первое посещение ещё отсюда можно достать
 
-      setWholeTime(thisWebsiteWholeData.summaryTime)
+      // setWholeData(thisWebsiteWholeData)
+      if (thisWebsiteWholeData) {
+        setWholeTime(thisWebsiteWholeData.summaryTime)
+      }
     }
   })
 
@@ -22,10 +24,10 @@ function OverallStatsCurrent(props) {
 
   return (
     <div className="section__whole-statistics">
-      <h5 className="mb-3">Статистика</h5>
+      <h5 className="mb-3">Статистика по сайту</h5>
 
       <div className="section__facts">
-        {wholeTime && (
+        {
           <div className="section__fact">
             <h3 className="mb-0">
               {wholeTimeArr.hours}ч:
@@ -33,7 +35,7 @@ function OverallStatsCurrent(props) {
             </h3>
             <p className="mb-0">всего</p>
           </div>
-        )}
+        }
         <div className="section__fact">
           <h3 className="mb-0">3 место</h3>
           <p className="mb-0">из 1217 сайтов</p>

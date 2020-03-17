@@ -12,8 +12,12 @@ function Header(props) {
   const [totalTime, setTotalTime] = useState(0)
   const today = new Date().toLocaleDateString("en-US")
 
-  let totalTimeArray = getArrayTime(totalTime)
-  let totalTimeThisArray = getArrayTime(thisSiteTotal)
+  let totalTimeArray = getArrayTime(0)
+  let totalTimeThisArray = getArrayTime(0)
+  if (totalTime) {
+    totalTimeArray = getArrayTime(totalTime)
+    totalTimeThisArray = getArrayTime(thisSiteTotal)
+  }
 
   useEffect(() => {
     if (props.tabs) {
@@ -23,8 +27,12 @@ function Header(props) {
       let totalTime = getTotalTimeForDay(today, targetTabs)
       setTotalTime(totalTime)
 
-      let thisSite = targetTabs.find(x => x.url == currentWebsite).summaryTime
-      setThisSiteTotal(thisSite)
+      let thisSite = targetTabs.find(x => x.url == currentWebsite)
+      if (thisSite) {
+        setThisSiteTotal(thisSite.summaryTime)
+      }
+
+      // console.log({totalTime}, {thisSite})
     }
     // chrome.storage.local.get("user_first_name", item => {
     //   setFirstName(item.user_first_name)
