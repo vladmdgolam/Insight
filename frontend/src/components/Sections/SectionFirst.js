@@ -1,45 +1,37 @@
 /* global chrome */
 import React, { useState, useEffect } from "react"
 import dots from "../../icons/dots.svg"
-import Chart from "../Chart"
+import Chart from "../Chart/ChartWebsite"
 import OverallStatsCurrent from "../OverallStatsCurrent"
 
 function SectionOpenedSite(props) {
-  const [website, setWebsite] = useState(null)
-  const { currentWebsite, tabs } = props
+  const { websiteCleanUrl, currentWebsite, tabs, favicon } = props
 
-  useEffect(() => {
-    if (currentWebsite) {
-      let website = currentWebsite.replace(/www\./, "")
-      website = website.charAt(0).toUpperCase() + website.slice(1)
-      setWebsite(website)
-    }
-  })
-
-  const data = [
+  const data = React.useMemo(() => [
     {
-      label: "Время на сайте",
+      label: "На сайте, мин",
       datums: [
         { x: "Пн", y: 39 },
         { x: "Вт", y: 49 },
-        { x: "Ср", y: 19 },
-        { x: "Чт", y: 50 },
+        { x: "Ср", y: 25 },
+        { x: "Чт", y: 0 },
         { x: "Пт", y: 0 },
         { x: "Сб", y: 0 },
         { x: "Вс", y: 0 }
       ]
     }
-  ]
+  ])
 
   return (
     <div className="section section__this-site">
-      <div className="section__pin">
-        <h3>{website}</h3>
+      <div className="section__pin align-items-center d-flex justify-content-center">
+        <img src={favicon} alt="favicon" className="img-fluid mr-1" />
+        <h3 className="mb-0">{websiteCleanUrl}</h3>
       </div>
       <div className="section__site-chart mb-5">
         <div className="d-flex justify-content-between mb-3">
-          <h5 className="mb-0">Время на сайте</h5>
-          <div className="">Сегодня</div>
+          <h5 className="mb-0">Время на сайте, минуты</h5>
+          <div className="">неделя</div>
         </div>
         <Chart data={data} />
       </div>

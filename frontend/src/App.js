@@ -14,7 +14,9 @@ class App extends React.Component {
     this.setCurrentWebsite = this.setCurrentWebsite.bind(this)
     this.openSection = this.openSection.bind(this)
     this.state = {
-      activeSection: 0
+      activeSection: 0,
+      currentWebsite: null,
+      favicon: null
     }
   }
 
@@ -35,9 +37,10 @@ class App extends React.Component {
     chrome.windows.getLastFocused({ populate: true }, currentWindow => {
       let url
       const activeTab = currentWindow.tabs.find(t => t.active === true)
+      // console.log(activeTab)
       url = activeTab.url.replace(/^(?:https?:\/\/)?/i, "").split("/")[0]
-      console.log(url)
-      this.setState({ currentWebsite: url })
+      // console.log(url)
+      this.setState({ currentWebsite: url, favicon: activeTab.favIconUrl })
     })
   }
 
@@ -53,7 +56,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { tabs, currentWebsite, activeSection } = this.state
+    const { tabs, currentWebsite, activeSection, favicon } = this.state
 
     return (
       <>
@@ -65,6 +68,7 @@ class App extends React.Component {
           handleOpenSection={this.openSection}
         />
         <Sections
+          favicon={favicon}
           activeSection={activeSection}
           currentWebsite={currentWebsite}
           tabs={tabs}

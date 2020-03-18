@@ -8,6 +8,7 @@
     "default_title": "Insight",
     "default_popup": "popup.html"
   },
+  "options_page": "options.html",
   "background": {
     "scripts": [
       "background.bundle.js",

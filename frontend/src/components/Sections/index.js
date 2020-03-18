@@ -10,44 +10,39 @@ class Sections extends React.Component {
   constructor(props) {
     super(props)
     this.flkty = React.createRef()
-    this.slideNavigate = this.slideNavigate.bind(this)
-  }
-
-  slideNavigate(index) {
-    this.flkty.select(index)
+    this.state = {
+      websiteCleanUrl: null
+    }
   }
 
   componentDidUpdate() {
     const { activeSection } = this.props
     if (this.flkty.selectedIndex != activeSection) {
-      this.slideNavigate(activeSection)
+      this.flkty.select(activeSection)
+    }
+    const { websiteCleanUrl } = this.state
+    if (!websiteCleanUrl) {
+      // console.log("setting")
+      const { currentWebsite } = this.props
+      const website = currentWebsite.replace(/www\./, "")
+      const websiteCleanUrl =
+        website
+          .replace(/www\./, "")
+          .charAt(0)
+          .toUpperCase() + website.slice(1)
+      this.setState({
+        websiteCleanUrl: websiteCleanUrl
+      })
+    } else {
     }
   }
 
   render() {
-    // const { activeSection } = this.props
+    const { websiteCleanUrl } = this.state
     const flickityOptions = {
       prevNextButtons: false,
       pageDots: false
     }
-
-    // let flkty = React.createRef()
-
-    // useEffect(() => {
-    //   console.log(flkty)
-    //   window.flkty = flkty
-    //   // flkty.select(activeSection)
-    //   // if (flkty != undefined) {
-    //   // }
-    //   // effect
-    //   // return () => {
-    //   //   cleanup
-    //   // }
-    // }, [activeSection])
-
-    // function slideNavigate() {
-    //   flkty.select(2)
-    // }
 
     return (
       <Flickity
@@ -59,7 +54,7 @@ class Sections extends React.Component {
         // reloadOnUpdate // default false
         static // default false
       >
-        <SectionFirst {...this.props} />
+        <SectionFirst websiteCleanUrl={websiteCleanUrl} {...this.props} />
         <SectionSecond {...this.props} />
         <SectionThird {...this.props} />
       </Flickity>

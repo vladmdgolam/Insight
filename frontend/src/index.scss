@@ -29,7 +29,91 @@ body {
   font-weight: 500;
 }
 
-//BLOCKS
+//BLOCKS and ELEMENTS
+
+.bar {
+  height: 18px;
+  width: 35%;
+  border-radius: 5px;
+  background: #c4c4c4;
+  margin-right: 7px;
+  &_new {
+    width: 73%;
+    background: #ef5b5f;
+    flex-grow: 1;
+  }
+}
+
+.optimal-bar {
+  border-radius: 5px;
+  height: 18px;
+  width: 100%;
+  background: #8f8f8f;
+  .inside-bar {
+    border-radius: 5px;
+    height: 18px;
+    background: #242424;
+    &_first {
+      width: 60%;
+    }
+    &_second {
+      width: 45%;
+    }
+  }
+}
+
+.optimal-bar-container {
+  flex-grow: 1;
+}
+
+.bar-container {
+  font-size: 13px;
+  font-weight: 500;
+  & + .bar-container {
+    margin-top: 10px;
+  }
+}
+
+.circle {
+  -ms-flex-item-align: center;
+  align-self: center;
+  height: 13px;
+  width: 13px;
+  background: #000;
+  border-radius: 50%;
+  display: inline-block;
+  &_media {
+    background-color: #f0c334;
+  }
+  &_productivity {
+    background-color: #53b872;
+  }
+  &_social {
+    background-color: #ef5b5f;
+  }
+  &_entertainment {
+    background-color: #945ca3;
+  }
+}
+
+.pill {
+  &_media {
+    background-color: #f0c334;
+  }
+  &_productivity {
+    background-color: #53b872;
+  }
+  &_social {
+    background-color: #ef5b5f;
+  }
+  &_entertainment {
+    background-color: #945ca3;
+  }
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 45px;
+  color: $white;
+}
 
 .header {
   padding: 16px;
@@ -67,7 +151,6 @@ body {
   padding: 16px;
 
   background: #ffffff;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 0px #b78b5c;
   border-radius: 4px;
   margin-left: 16px;
   margin-right: 16px;
@@ -79,9 +162,50 @@ body {
   }
   &__chart {
     height: 135px;
+    &_comparison {
+      height: 50px;
+    }
+  }
+  &__area-chart-box {
+    .small,
+    .small div {
+      font-weight: 500;
+    }
+    .circle {
+      margin-right: 3px;
+    }
+  }
+  &__insight {
+    margin-top: 35px;
+  }
+  &__chart_area {
+    height: 200px;
   }
 
-  &__this-site, &__overall-stats, &__insights {
+  &__this-site {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 0px #b78b5c;
+  }
+
+  &__gradient-graph {
+    margin: -16px -16px 0 -16px;
+    &_pills {
+      margin-top: 8px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  &__overall-stats {
+    .section__site-chart {
+      margin-top: 12px;
+    }
+    .section__facts {
+    }
+  }
+
+  &__this-site,
+  &__overall-stats,
+  &__insights {
     width: 468px;
   }
 
@@ -90,8 +214,23 @@ body {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 6px;
     row-gap: 12px;
+    padding: 0 10px;
+    p {
+      line-height: 1.1;
+      margin-top: 2px;
+    }
   }
 
   &__this-site {
+  }
+  &__optimal {
+    font-size: 12px;
+    font-weight: 600;
+    .favicon {
+      width: 18px;
+    }
+    &_site-name {
+      flex-basis: 30%;
+    }
   }
 }

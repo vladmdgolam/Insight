@@ -7,13 +7,14 @@ import { getTotalTimeForDay, getArrayTime } from "./../../Helpers"
 
 function Header(props) {
   const { currentWebsite, activeSection } = props
-  // const [firstName, setFirstName] = useState(null)
-  const [thisSiteTotal, setThisSiteTotal] = useState(0)
+
   const [totalTime, setTotalTime] = useState(0)
+  const [thisSiteTotal, setThisSiteTotal] = useState(0)
   const today = new Date().toLocaleDateString("en-US")
 
   let totalTimeArray = getArrayTime(0)
   let totalTimeThisArray = getArrayTime(0)
+
   if (totalTime) {
     totalTimeArray = getArrayTime(totalTime)
     totalTimeThisArray = getArrayTime(thisSiteTotal)
@@ -21,18 +22,18 @@ function Header(props) {
 
   useEffect(() => {
     if (props.tabs) {
-      let targetTabs = props.tabs.filter(x =>
+      let todayTabs = props.tabs.filter(x =>
         x.days.find(s => s.date === today)
       )
-      let totalTime = getTotalTimeForDay(today, targetTabs)
+      let totalTime = getTotalTimeForDay(today, todayTabs)
       setTotalTime(totalTime)
 
-      let thisSite = targetTabs.find(x => x.url == currentWebsite)
+      let thisSite = todayTabs.find(x => x.url == currentWebsite)
       if (thisSite) {
         setThisSiteTotal(thisSite.summaryTime)
       }
 
-      // console.log({totalTime}, {thisSite})
+      // c onsole.log({totalTime}, {thisSite})
     }
     // chrome.storage.local.get("user_first_name", item => {
     //   setFirstName(item.user_first_name)
@@ -63,8 +64,8 @@ function Header(props) {
     <header className="header bg-secondary text-light text-center">
       <div className="header__top d-flex justify-content-between">
         <div className="d-flex">
-          <img src={logo} alt="Insight logo" />
-          <h1>Привет, {props.user.name}!</h1>
+          <img src={logo} alt="Insight logo" className="img-fluid mr-2" />
+          <h1 className="mb-0">Привет, {props.user.name}!</h1>
         </div>
         <img
           onClick={() => props.openOptionsPage()}
