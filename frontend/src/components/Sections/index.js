@@ -5,7 +5,6 @@ import SectionSecond from "./SectionSecond"
 import SectionThird from "./SectionThird"
 import Flickity from "react-flickity-component"
 
-// function Sections(props) {
 class Sections extends React.Component {
   constructor(props) {
     super(props)

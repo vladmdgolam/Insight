@@ -25,7 +25,9 @@ function SectionOpenedSite(props) {
   return (
     <div className="section section__this-site">
       <div className="section__pin align-items-center d-flex justify-content-center">
-        <img src={favicon} alt="favicon" className="img-fluid mr-1" />
+        {favicon && (
+          <img src={favicon} alt="favicon" className="img-fluid mr-1" />
+        )}
         <h3 className="mb-0">{websiteCleanUrl}</h3>
       </div>
       <div className="section__site-chart mb-5">

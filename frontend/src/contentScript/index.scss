@@ -1,0 +1,11 @@
+.insight-bar {
+  height: 10px;
+  position: fixed;
+  width: 100%;
+  background: linear-gradient(to right, #ffb800 50%, #53b872 70%);
+  bottom: 0px;
+  left: 0px;
+//   pointer-events: none;
+  right: 0px;
+  z-index: 1000000000;
+}

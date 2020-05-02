@@ -15,7 +15,7 @@ export function getTotalTimeForDay(day, tabs) {
 }
 
 export function getArrayTime(summaryTime) {
-  console.log(summaryTime)
+  // console.log(summaryTime)
   var days = Math.floor(summaryTime / 3600 / 24)
   var totalHours = summaryTime % (3600 * 24)
   var hours = Math.floor(totalHours / 3600)
