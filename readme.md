@@ -1,12 +1,14 @@
 ## Инсайт
 *расширение для анализа и корректирования проведённого в интернете времени*
 
-### для запуска:
-**backend/** `bundle install, rake db:migrate, rake db:seed`
-**frontend/** `yarn`
-`cd ..; yarn start` или /frontend:`yarn start` + /backend:`rails s`
+### Для запуска/разработки:
+1. **backend/** `bundle install, rake db:migrate, rake db:seed`
 
-Потом в Chrome → расширения (включаем режим разработчика)→загрузить распакованное расширение→frontend/dev/
+2. **frontend/** `yarn`
+
+3. `cd ..; yarn start` или /frontend:`yarn start` + /backend:`rails s`
+
+4. Chrome → расширения → включить режим разработчика →загрузить распакованное расширение→frontend/dev/
 
 ## Frontend
 
