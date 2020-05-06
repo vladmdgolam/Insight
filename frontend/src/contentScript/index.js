@@ -36,7 +36,11 @@ function initializeReactThings() {
       div.id = "insight-extension-div"
       document.body.insertAdjacentElement("afterbegin", div)
       ReactDOM.render(<Bar />, document.getElementById("insight-extension-div"))
-
+      
+      // const s = document.createElement("script")
+      // s.type = "text/javascript"
+      // s.src = "http://localhost:8097"
+      // document.body.insertAdjacentElement("afterbegin", s)
       // document
       //   .querySelector("#insight-extension-div")
       //   .addEventListener("click", function () {

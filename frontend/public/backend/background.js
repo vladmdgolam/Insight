@@ -38,11 +38,11 @@ function backgroundCheck() {
         }
 
         if (activity.isInBlackList(activeUrl)) {
-          chrome.browserAction.setBadgeBackgroundColor({ color: "#FF0000" })
-          chrome.browserAction.setBadgeText({
-            tabId: activeTab.id,
-            text: "n/a",
-          })
+          // chrome.browserAction.setBadgeBackgroundColor({ color: "#FF0000" })
+          // chrome.browserAction.setBadgeText({
+          //   tabId: activeTab.id,
+          //   text: "n/a",
+          // })
         } else {
           if (tab !== undefined) {
             if (currentTab !== tab.url) {
@@ -63,35 +63,41 @@ function backgroundCheck() {
   })
 }
 
+let showed = false
+
 function mainTRacker(activeUrl, tab, activeTab) {
   if (activity.isLimitExceeded(activeUrl, tab)) {
-    setBlockPageToCurrent(activeUrl)
+    // setBlockPageToCurrent(activeUrl)
   }
   if (!activity.isInBlackList(activeUrl)) {
-    if (activity.isNeedNotifyView(activeUrl, tab)) {
-      if (isHasPermissioForNotification) {
-        showNotification(activeUrl, tab)
-      } else {
-        checkPermissionsForNotifications(showNotification, activeUrl, tab)
-      }
-    }
+    // if (activity.isNeedNotifyView(activeUrl, tab)) {
+    //   if (isHasPermissioForNotification) {
+    //     showNotification(activeUrl, tab)
+    //   } else {
+    //     checkPermissionsForNotifications(showNotification, activeUrl, tab)
+    //   }
+    // }
     tab.incSummaryTime()
   }
-  if (setting_view_in_badge === true) {
-    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 0] })
-    var today = new Date().toLocaleDateString("en-US")
-    var summary = tab.days.find((s) => s.date === today).summary
-    chrome.browserAction.setBadgeText({
-      tabId: activeTab.id,
-      text: String(convertSummaryTimeToBadgeString(summary)),
-    })
-  } else {
-    chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 0] })
-    chrome.browserAction.setBadgeText({
-      tabId: activeTab.id,
-      text: "",
-    })
-  }
+  // if (!showed) {
+  //   showed = true
+  //   console.log(activeUrl, tab, activeTab)
+  // }
+  // if (setting_view_in_badge === true) {
+  //   chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 0] })
+  //   var today = new Date().toLocaleDateString("en-US")
+  //   var summary = tab.days.find((s) => s.date === today).summary
+  //   chrome.browserAction.setBadgeText({
+  //     tabId: activeTab.id,
+  //     text: String(convertSummaryTimeToBadgeString(summary)),
+  //   })
+  // } else {
+  //   chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 0] })
+  //   chrome.browserAction.setBadgeText({
+  //     tabId: activeTab.id,
+  //     text: "",
+  //   })
+  // }
 }
 
 function showNotification(activeUrl, tab) {
@@ -430,19 +436,41 @@ updateStorage()
 // })
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(
-    sender.tab
-      ? "from a content script:" + sender.tab.url
-      : "from the extension"
-  )
-
+  // console.log(
+  //   sender.tab
+  //     ? "from a content script:" + sender.tab.url
+  //     : "from the extension"
+  // )
+  // console.log(sender.tab, "sender tab", currentTab)
+  
+  const activeHostname = activity.extractHostname(sender.tab.url)
   if (request.askFor === "limit") {
     const found = setting_restriction_list.find(
-      (element) => element.domain == currentTab
+      (element) => element.domain === activeHostname
     )
     sendResponse({
       limit: found ? found.time : 1800,
-      firstTime: found ? false : true
+      firstTime: found ? false : true,
     })
+  } else if (request.askFor === "time") {
+    // console.log("searching for things", currentTab)
+    const tab = tabs.find((element) => element.url === activeHostname)
+    if (tab) {
+      // console.log("tab found", tab)
+      var today = new Date().toLocaleDateString("en-US")
+      var summary = tab.days.find((s) => s.date === today).summary
+      // console.log({ summary })
+
+      sendResponse({
+        time: summary,
+        notFound: false,
+      })
+    } else {
+      // console.log("tab not found")
+      sendResponse({
+        time: 0,
+        notFound: true,
+      })
+    }
   }
 })
