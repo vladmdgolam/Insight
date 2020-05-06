@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import useInterval from "./hooks/UseInterval"
 import "./index.scss"
-// import "react-devtools"
+import MessageModal from "./components/MessageModal"
 var classNames = require("classnames")
 
 const StyledDiv = styled.div`
@@ -33,16 +33,27 @@ function Bar() {
           firstTime
         )
         setFirstTime(firstTime)
-        console.log("set first time", limitThing)
+        // console.log("set first time", limitThing)
         setLimit(limitThing)
       }
     })
-    chrome.runtime.connect().onDisconnect.addListener(function () {
-      if (!chrome.runtime.lastError) {
-        setDisconnected(true)
-      }
-    })
+    chrome.runtime.connect().onDisconnect.addListener(changeDisconnect(true))
+    chrome.runtime.onConnect.addListener(changeDisconnect(false))
+
+    return () => {
+      chrome.runtime
+        .connect()
+        .onDisconnect.removeListener(changeDisconnect(true))
+      chrome.runtime.onConnect.removeListener(changeDisconnect(false))
+    }
   }, [])
+
+  function changeDisconnect(value) {
+    if (chrome.runtime.lastError) {
+    }
+    setDisconnected(value)
+    console.log(value ? "disconnected" : "connected")
+  }
 
   useEffect(() => {
     if (limitReached) {
@@ -87,6 +98,8 @@ function Bar() {
   }, 1000)
 
   function getTimeStats() {
+    setLimitReached(true)
+    // console.log({ disconnected })
     console.log(timeSpent, limit, progress)
   }
 
@@ -96,9 +109,11 @@ function Bar() {
   })
 
   return (
-    <StyledDiv progress={progress} onClick={getTimeStats} className={classes}>
-      {/* {text} */}
-    </StyledDiv>
+    <>
+      <StyledDiv progress={progress} onClick={getTimeStats} className={classes}>
+        <MessageModal modalOpen={limitReached}/> 
+      </StyledDiv>
+    </>
   )
 }
 

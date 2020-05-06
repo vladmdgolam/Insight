@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <title>Инсайт</title>
+   <link href="style/picker/standalone.min.css" rel="stylesheet" />
+   <link href="style/picker/clockpicker.min.css" rel="stylesheet" />
+   <link href="style/settings.css" rel="stylesheet" />
+   <script src="backend/common.js"></script>
+   <script src="backend/storage.js"></script>
+   <script src="backend/settings.js"></script>
+   <script src="backend/restriction.js"></script>
+   <script src="picker/jquery-3.3.1.min.js"></script>
+   <script src="picker/clockpicker.min.js"></script>
+</head>
+
+<body>
+   <div class="content">
+      <div class="header">
+         <p class="title">Инсайт</p>
+      </div>
+      <div id='nav' class="nav">
+         <a id='settingsBtn' class="active">Настройки</a>
+         <a id='restrictionsBtn'>Цели (лимиты)</a>
+      </div>
+      <div id='block'>
+         <div id='settingsBlock'>
+            <!-- <label>
+               <input type="checkbox" class="filled-in" id="viewTimeInBadge" checked="checked" />
+               <span>Display time tracker in icon</span>
+            </label> -->
+            <div class="margin-top-10">
+               <label>Stop tracking if no activity detected for: </label>
+               <!-- <div class="tooltip"><img src="/icons/information.svg" height="18" />
+                  <span class="tooltiptext">An activity is an action with a mouse or keyboard</span>
+               </div> -->
+               <div class="margin-top-10">
+                  <select id='intervalInactivity' class="option">
+                     <option value="30">30 seconds</option>
+                     <option value="45">45 seconds</option>
+                     <option value="60">1 min</option>
+                     <option value="120">2 min</option>
+                     <option value="300">5 mins</option>
+                     <option value="600">10 mins</option>
+                     <option value="1200">20 mins</option>
+                     <option value="1800">30 mins</option>
+                  </select>
+               </div>
+               <div class="margin-top-10">
+                  <label>Ignored list of domain: </label>
+                  <div class="margin-top-10">
+                     <ul id='blackList' class="listbox" size="7"></ul>
+                  </div>
+                  <div class="margin-top-10">
+                     <input type="text" placeholder="Enter site name..." id='addBlackSiteLbl' />
+                     <input type="button" value="+" id='addBlackSiteBtn' />
+                  </div>
+                  <div class="notify warning" id='notifyForBlackList' hidden>
+                     The site is already in the list
+                  </div>
+               </div>
+               <div class="margin-top-10">
+                  <input type="button" value="Export to CSV" id='exportToCsv'>
+               </div>
+               <div class="margin-top-10">
+                  <div class="inline-block">
+                     <div id='permissionSuccessedBlockForYT' hidden>
+                        <img src="/icons/success.png" height="18" />
+                        <label>Permissions have been granted</label>
+                     </div>
+                  </div>
+               </div>
+               <div class="margin-top-10">
+                  <label>Data in memory use </label><label id='memoryUse'></label>
+               </div>
+               <div class="margin-top-10"><input type="button" value="Clear all data" id='clearAllData'></div>
+               <div class="notify" id='notify' hidden>
+                  Data succeed deleted
+               </div>
+            </div>
+         </div>
+         <div id='restrictionsBlock' hidden>
+            <label>Access daily restrictions for websites: </label>
+            <div class="margin-top-10">
+               <input type="text" class="label-with-list" placeholder="Enter site name..." id='addRestrictionSiteLbl' />
+               <div class="inline-block clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                  <input type="text" class="clock" placeholder="Time..." readonly id="addRestrictionTimeLbl">
+               </div>
+               <input type="button" value="+" class="btn-with-list" id='addRestrictionSiteBtn' />
+            </div>
+            <div class="margin-top-10">
+               <ul id='restrictionsList' class="listbox list" size="10"></ul>
+            </div>
+            <div class="notify warning notify-width-300" id='notifyForRestrictionList' hidden>
+               The site is already in the list
+            </div>
+         </div>
+         <div id='notifyBlock' hidden>
+            <label>List of sites with notifications: </label>
+            <div class="margin-top-10">
+               <input type="text" class="label-with-list" placeholder="Enter site name..." id='addNotifySiteLbl' />
+               <div class="inline-block clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                  <input type="text" class="clock" placeholder="Time..." readonly id="addNotifyTimeLbl">
+               </div>
+               <input type="button" class="btn-with-list" value="+" id='addNotifySiteBtn' />
+            </div>
+            <div class="margin-top-10">
+               <ul id='notifyList' class="listbox list" size="10"></ul>
+            </div>
+            <div class="margin-top-10">
+               <label>You can set message for notification: </label>
+               <div class="setting-notify-block">
+                  <img src="icons/128x128.png" class="setting-notify-img">
+                  <div class="setting-notify-message-block">
+                     <span class="setting-notify-title">Инсайт</span>
+                     <input type="text" class="setting-notify-message" id="notifyMessage" />
+                  </div>
+               </div>
+            </div>
+            <div class="margin-top-10">
+               <label class="block">In order to Insight showed notifications every time you spend a specified time interval on the site, you need grant permission to access for notifications.
+               </label>
+               <input class="margin-top-10" type="button" value="Grant permission" id='grantPermissionForNotifications'>
+               <div class="inline-block">
+                  <div id='permissionSuccessedBlockForNotifications' hidden>
+                     <img src="/icons/success.png" height="18" />
+                     <label>Permissions have been granted</label>
+                  </div>
+               </div>
+            </div>
+            <div class="notify warning notify-width-300" id='notifyForNotifyList' hidden>
+               The site is already in the notify list
+            </div>
+         </div>
+         <div id='aboutBlock' hidden>
+            <div><label id='version'></label></div>
+         </div>
+      </div>
+   </div>
+</body>
+
+</html>

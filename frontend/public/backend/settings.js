@@ -2,8 +2,8 @@ var storage = new LocalStorage();
 var blackList = [];
 var restrictionList = [];
 var notifyList = [];
-var blockBtnList = ['settingsBtn', 'restrictionsBtn', 'notifyBtn', 'aboutBtn'];
-var blockList = ['settingsBlock', 'restrictionsBlock', 'notifyBlock', 'aboutBlock'];
+var blockBtnList = ['settingsBtn', 'restrictionsBtn'];
+var blockList = ['settingsBlock', 'restrictionsBlock'];
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('settingsBtn').addEventListener('click', function () {
@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('restrictionsBtn').addEventListener('click', function () {
         setBlockEvent('restrictionsBtn', 'restrictionsBlock');
     });
-    document.getElementById('notifyBtn').addEventListener('click', function () {
-        setBlockEvent('notifyBtn', 'notifyBlock');
-    });
-    document.getElementById('aboutBtn').addEventListener('click', function () {
-        setBlockEvent('aboutBtn', 'aboutBlock');
-        loadVersion();
-    });
+    // document.getElementById('notifyBtn').addEventListener('click', function () {
+    //     setBlockEvent('notifyBtn', 'notifyBlock');
+    // });
+    // document.getElementById('aboutBtn').addEventListener('click', function () {
+    //     setBlockEvent('aboutBtn', 'aboutBlock');
+    //     loadVersion();
+    // });
     document.getElementById('clearAllData').addEventListener('click', function () {
         clearAllData();
     });

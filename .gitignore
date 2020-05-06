@@ -28,11 +28,6 @@
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-/frontend/public/options.html
-/frontend/public/style/
-/frontend/public/picker/
-/frontend/public/icons/
-
 # dependencies
 /**/node_modules/
 /**/.pnp
