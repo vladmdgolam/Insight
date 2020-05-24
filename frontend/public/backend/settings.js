@@ -34,18 +34,18 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addNotifySiteBtn').addEventListener('click', function () {
         addNewSiteClickHandler('addNotifySiteLbl', 'addNotifyTimeLbl', actionAddNotifyToList, 'notifyForNotifyList');
     });
-    document.getElementById('viewTimeInBadge').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_VIEW_TIME_IN_BADGE, this.checked);
-    });
+    // document.getElementById('viewTimeInBadge').addEventListener('change', function () {
+    //     storage.saveValue(SETTINGS_VIEW_TIME_IN_BADGE, this.checked);
+    // });
     document.getElementById('intervalInactivity').addEventListener('change', function () {
         storage.saveValue(SETTINGS_INTERVAL_INACTIVITY, this.value);
     });
-    document.getElementById('rangeToDays').addEventListener('change', function () {
-        storage.saveValue(SETTINGS_INTERVAL_RANGE, this.value);
-    });
-    document.getElementById('grantPermissionForYT').addEventListener('click', function () {
-        grantPermissionForYT();
-    });
+    // document.getElementById('rangeToDays').addEventListener('change', function () {
+    //     storage.saveValue(SETTINGS_INTERVAL_RANGE, this.value);
+    // });
+    // document.getElementById('grantPermissionForYT').addEventListener('click', function () {
+    //     grantPermissionForYT();
+    // });
     document.getElementById('grantPermissionForNotifications').addEventListener('click', function () {
         grantPermissionForNotifications();
     });

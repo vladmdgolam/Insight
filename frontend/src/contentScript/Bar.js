@@ -21,6 +21,7 @@ function Bar() {
   const [timeSpent, setTime] = useState(0)
   const [progress, setProgress] = useState(0)
   const [disconnected, setDisconnected] = useState(false)
+  const [tab, setTab] = useState(null)
 
   useEffect(() => {
     chrome.runtime.sendMessage({ askFor: "limit" }, function (response) {
@@ -48,15 +49,25 @@ function Bar() {
     }
   }, [])
 
+  function requestTab() {
+    chrome.runtime.sendMessage({ askFor: "tab" }, function (response) {
+      if (!chrome.runtime.lastError) {
+        const { tab: newTab } = response
+        setTab(newTab)
+      }
+    })
+  }
+
   function changeDisconnect(value) {
     if (chrome.runtime.lastError) {
     }
     setDisconnected(value)
-    console.log(value ? "disconnected" : "connected")
+    // console.log(value ? "disconnected" : "connected")
   }
 
   useEffect(() => {
     if (limitReached) {
+      requestTab()
       if (firstTime) {
         console.log("show one modal")
       } else {
@@ -70,6 +81,14 @@ function Bar() {
     limitRef.current = limit
   })
 
+  const sendMessageToChrome = (askFor, message) => {
+    // console.log("message is", { askFor: askFor, ...message })
+    chrome.runtime.sendMessage({askFor: askFor, ...message}, (response) => {
+      void chrome.runtime.lastError
+      return response
+    })
+  }
+
   const getTime = () => {
     chrome.runtime.sendMessage({ askFor: "time" }, (response) => {
       if (!chrome.runtime.lastError) {
@@ -81,7 +100,7 @@ function Bar() {
           setProgress(ratio)
           if (ratio >= 100) {
             setLimitReached(true)
-            console.log("WOOOOW")
+            console.log("limit is reached")
           }
         } else {
           // alert("Time on current website is not found")
@@ -110,8 +129,14 @@ function Bar() {
 
   return (
     <>
-      <StyledDiv progress={progress} onClick={getTimeStats} className={classes}>
-        <MessageModal modalOpen={limitReached}/> 
+      <StyledDiv progress={progress} className={classes}>
+        <MessageModal
+          sendMessage={sendMessageToChrome}
+          limit={limit}
+          tab={tab}
+          modalOpen={limitReached}
+          totalTime={timeSpent}
+        />
       </StyledDiv>
     </>
   )

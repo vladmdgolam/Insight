@@ -435,6 +435,8 @@ updateStorage()
 //   })
 // })
 
+let moreLimits = {}
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   // console.log(
   //   sender.tab
@@ -442,14 +444,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //     : "from the extension"
   // )
   // console.log(sender.tab, "sender tab", currentTab)
-  
+
   const activeHostname = activity.extractHostname(sender.tab.url)
   if (request.askFor === "limit") {
-    const found = setting_restriction_list.find(
-      (element) => element.domain === activeHostname
-    )
+    let found = moreLimits[activeHostname]
+    console.log(moreLimits, found)
+    if (!found) {
+      found = setting_restriction_list.find(
+        (element) => element.domain === activeHostname
+      )
+      found = found ? found.time : false
+    }
     sendResponse({
-      limit: found ? found.time : 1800,
+      limit: found ? found : 1800,
       firstTime: found ? false : true,
     })
   } else if (request.askFor === "time") {
@@ -471,6 +478,32 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         time: 0,
         notFound: true,
       })
+    }
+  } else if (request.askFor === "tab") {
+    const tab = tabs.find((element) => element.url === activeHostname)
+    sendResponse({
+      tab: tab,
+    })
+  } else if (request.askFor === "closeAll") {
+    let tabsOfThisHost
+    chrome.tabs.query({}, function (tabs) {
+      let regex = new RegExp(activeHostname, "g")
+      let res = tabs.filter(({ url }) => url.match(regex))
+      tabsOfThisHost = res.map(({ id }) => id)
+      chrome.tabs.remove(tabsOfThisHost)
+    })
+  } else if (request.askFor === "addMoreTime") {
+    // console.log("add more time", request)
+    const found = setting_restriction_list.find(
+      (element) => element.domain === activeHostname
+    )
+    const time = request.time + (found ? found.time : 1800)
+    console.log(time, request.time)
+
+    if (moreLimits[activeHostname]) {
+      moreLimits[activeHostname] += time
+    } else {
+      moreLimits[activeHostname] = time
     }
   }
 })
