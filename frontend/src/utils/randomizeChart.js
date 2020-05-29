@@ -23,7 +23,7 @@ const options = {
     "gridLeft",
     "gridRight",
     "gridCenter",
-    "pointer"
+    "pointer",
   ],
   tooltipAlign: [
     "auto",
@@ -35,9 +35,9 @@ const options = {
     "topRight",
     "bottomLeft",
     "bottomRight",
-    "center"
+    "center",
   ],
-  snapCursor: [true, false]
+  snapCursor: [true, false],
 }
 
 const optionKeys = Object.keys(options)
@@ -63,7 +63,7 @@ export default function useChartConfig({
   tooltipAlign = "auto",
   grouping = "primary",
   snapCursor = true,
-  datums = 10
+  datums = 10,
 }) {
   const [state, setState] = React.useState({
     count,
@@ -84,40 +84,40 @@ export default function useChartConfig({
     grouping,
     snapCursor,
     datums,
-    data: makeDataFrom(dataType, series, useR, datums)
+    data: makeDataFrom(dataType, series, useR, datums),
   })
 
   React.useEffect(() => {
-    setState(old => ({
+    setState((old) => ({
       ...old,
-      data: makeDataFrom(dataType, series, useR, datums)
+      data: makeDataFrom(dataType, series, useR, datums),
     }))
   }, [count, dataType, datums, series, useR])
 
   const randomizeData = () =>
-    setState(old => ({
+    setState((old) => ({
       ...old,
-      data: makeDataFrom(dataType, series, useR, datums)
+      data: makeDataFrom(dataType, series, useR, datums),
     }))
 
   const Options = optionKeys
-    .filter(option => show.indexOf(option) > -1)
-    .map(option => (
+    .filter((option) => show.indexOf(option) > -1)
+    .map((option) => (
       <div key={option}>
         {option}: &nbsp;
         <select
           value={state[option]}
           onChange={({ target: { value } }) =>
-            setState(old => ({
+            setState((old) => ({
               ...old,
               [option]:
                 typeof options[option][0] === "boolean"
                   ? value === "true"
-                  : value
+                  : value,
             }))
           }
         >
-          {options[option].map(d => (
+          {options[option].map((d) => (
             <option value={d} key={d.toString()}>
               {d.toString()}
             </option>
@@ -130,13 +130,13 @@ export default function useChartConfig({
   return {
     ...state,
     randomizeData,
-    Options
+    Options,
   }
 }
 
 function makeDataFrom(dataType, series, useR, datums) {
   return [
-    ...new Array(series || Math.max(Math.round(Math.random() * 5), 1))
+    ...new Array(series || Math.max(Math.round(Math.random() * 5), 1)),
   ].map((d, i) => makeSeries(i, dataType, useR, datums))
 }
 
@@ -146,7 +146,27 @@ function makeSeries(i, dataType, useR, datums) {
   startDate.setMinutes(0)
   startDate.setSeconds(0)
   startDate.setMilliseconds(0)
+  // console.log(i)
   // const length = 5 + Math.round(Math.random() * 15)
+  let label
+  switch (i) {
+    case 0:
+      label = "Продуктивность"
+      break;
+    case 1:
+      label = "Социальные сети"
+      break;
+    case 2:
+      label = "Развлечения"
+      break;
+    case 3:
+      label = "Другое"
+      break;
+    default:
+      label = "Дефолт"
+      break;
+  }
+
   const length = datums
   const min = 0
   const max = 100
@@ -154,7 +174,8 @@ function makeSeries(i, dataType, useR, datums) {
   const rMax = 20
   const nullChance = 0
   return {
-    label: `Series ${i + 1}`,
+    label: label,
+    // label: `Series ${i + 1}`,
     datums: [...new Array(length)].map((_, i) => {
       let x = start + i
       if (dataType === "ordinal") {
@@ -184,8 +205,8 @@ function makeSeries(i, dataType, useR, datums) {
       return {
         x,
         y,
-        r
+        r,
       }
-    })
+    }),
   }
 }

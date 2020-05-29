@@ -8,8 +8,13 @@ import Bar from "./Bar"
 //   if (chrome.runtime.lastError) {
 //     console.log("fuck it! I've checked the goddamn thing")
 //   }
-  initializeReactThings()
+  // initializeReactThings()
 // })
+
+const div = document.createElement("div")
+div.id = "insight-extension-div"
+document.body.insertAdjacentElement("afterbegin", div)
+ReactDOM.render(<Bar />, document.getElementById("insight-extension-div"))
 
 function initializeReactThings() {
   var readyStateCheckInterval = setInterval(function () {

@@ -35,7 +35,8 @@ function Bar() {
         )
         setFirstTime(firstTime)
         // console.log("set first time", limitThing)
-        setLimit(limitThing)
+        // setLimit(180)
+        setLimit(limitThing) // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       }
     })
     chrome.runtime.connect().onDisconnect.addListener(changeDisconnect(true))

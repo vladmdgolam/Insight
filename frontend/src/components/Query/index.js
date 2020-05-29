@@ -3,11 +3,15 @@ import { useQuery } from "@apollo/react-hooks"
 
 const Query = ({ children, query, id }) => {
   const { data, loading, error } = useQuery(query, {
-    variables: { id: id }
+    errorPolicy: "all",
+    variables: { id: id },
+    options: {
+      errorPolicy: "all",
+    },
   })
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {JSON.stringify(error)}</p>
+  if (error) return <p>11</p>
   return children({ data })
 }
 
