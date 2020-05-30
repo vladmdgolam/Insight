@@ -11,7 +11,7 @@ const Query = ({ children, query, id }) => {
   })
 
   if (loading) return <p>Loading...</p>
-  if (error) return <p>11</p>
+  if (error) return <p>Error</p>
   return children({ data })
 }
 

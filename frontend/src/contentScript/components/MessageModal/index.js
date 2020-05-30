@@ -34,9 +34,10 @@ export default function MessageModal(props) {
   //     setIsOpen(false)
   //   }
 
-  //   console.log({tab})
-  const siteNameOg = document.querySelector("meta[property='og:site_name']").content
-  setSiteOgName(siteNameOg ? siteNameOg : false)
+  const meta = document.querySelector("meta[property='og:site_name']")
+  if (meta) {
+    setSiteOgName(meta.content)
+  }
   // useEffect(() => {
   // }, [])
 
@@ -100,7 +101,11 @@ export default function MessageModal(props) {
           >
             хорошо
           </div>
-          <p className="small">(закрыть все<br/>вкладки сайта)</p>
+          <p className="small">
+            (закрыть все
+            <br />
+            вкладки сайта)
+          </p>
         </div>
         <div className="insight-message-modal_button-wrapper">
           <div
